@@ -1,5 +1,7 @@
 # Use an official Node.js runtime as the base image
-FROM node:lts-slim
+FROM node:lts-alpine3.19
+
+ADD . /frontend
 
 # Set the working directory in the container
 WORKDIR /frontend
@@ -14,10 +16,10 @@ RUN npm install --silent
 # COPY . .
 
 # Build the React app
-RUN npm run build
+# RUN npm run build --silent
 
 # Expose the port that the app will run on
-EXPOSE 4000
+EXPOSE 3000
 
 # Define the command to run the app
 CMD ["npm", "start"]

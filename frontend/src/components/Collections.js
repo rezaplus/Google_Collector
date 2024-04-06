@@ -42,7 +42,7 @@ const CollectedData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/collected-data?page=1&limit=100000000000");
+      const response = await fetch("http://localhost:3001/collected-data?page=1&limit=100000000000");
       const jsonData = await response.json();
 
       // define column names

@@ -29,7 +29,7 @@ const searchIgnore = mongoose.model('searchIgnore', searchIgnoreSchema);
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/collections');
+  await mongoose.connect('mongodb://mongo/collections');
 }
 
 // Function to add a new search result

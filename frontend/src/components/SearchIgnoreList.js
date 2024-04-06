@@ -8,7 +8,7 @@ const SearchIgnoreList = () => {
   useEffect(() => {
     const fetchIgnoreList = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/ignore');
+        const response = await axios.get('http://localhost:3001/ignore');
         setIgnoreList(response.data);
       } catch (error) {
         console.error('Error fetching ignore list:', error);
@@ -20,7 +20,7 @@ const SearchIgnoreList = () => {
 
   const handleAddItem = async () => {
     try {
-      await axios.put('http://localhost:3000/ignore', { domain: newItem });
+      await axios.put('http://localhost:3001/ignore', { domain: newItem });
       setIgnoreList([...ignoreList, { domain: newItem }]);
       setNewItem('');
     } catch (error) {
@@ -30,7 +30,7 @@ const SearchIgnoreList = () => {
 
   const handleDeleteItem = async (item) => {
     try {
-      await axios.delete('http://localhost:3000/ignore', { data: { domain: item.domain } });
+      await axios.delete('http://localhost:3001/ignore', { data: { domain: item.domain } });
       setIgnoreList(ignoreList.filter((i) => i.domain !== item.domain));
     } catch (error) {
       console.error('Error deleting item:', error);

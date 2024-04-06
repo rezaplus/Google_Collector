@@ -8,7 +8,29 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const port = 3000;
+const port = 3001;
+
+const Token = 'Bearer AIzaSyD8Z0jJ9Q9Q6Z2MaSKLNSD2jkmsasdnk';
+
+
+app.use(cors(
+  {
+    origin: 'http://localhost',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  }
+));
+
+app.use((req, res, next) => {
+  // validate Bearer token
+  const bearerToken = req.headers.authorization;
+  
+  if (!bearerToken || bearerToken !== Token) {
+    return res.status(401).send('Unauthorized');
+  }
+  next();
+});
 
 app.use(bodyParser.json());
 
@@ -16,14 +38,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 
-app.use(cors(
-  {
-    origin: 'http://localhost:4000',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
-  }
-));
+
+
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any origin

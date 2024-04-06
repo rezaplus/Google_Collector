@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  backend:
+    build: "./backend"
+    container_name: backend
+    restart: always
+    ports:
+      - "3000:3000"
+    
+  frontend:
+    build: "./client"
+    container_name: frontend
+    restart: always
+    ports:
+      - "4000:80"
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    

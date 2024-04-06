@@ -1,0 +1,7 @@
+.scrollable-cell {
+    max-width: 200px; /* Set maximum width for columns */
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Show ellipsis (...) for truncated text */
+  }
+  

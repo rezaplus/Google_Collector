@@ -14,7 +14,7 @@ const Token = process.env.BEARER_TOKEN;
 
 app.use(cors(
   {
-    origin: 'http://localhost',
+    origin: 'http://localhost:5050,http://3.9.0.94:5050',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 200,

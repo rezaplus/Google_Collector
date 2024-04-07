@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.19
+FROM node:slim
 
 ADD . /backend
 WORKDIR /backend

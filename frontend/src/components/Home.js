@@ -20,7 +20,7 @@ function Home() {
   const handleCollectData = async (link, id) => {
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:3001/scrape', { link, query });
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/scrape', { link, query }, { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
       setScrapingData({ ...scrapingData, [id]: response.data });
     } catch (error) {
       console.error('Error scraping data:', error);
@@ -35,7 +35,7 @@ function Home() {
     try {
       setCollectionProgress(0); // Reset progress
       const promises = searchResults.map((result) => {
-        return axios.post('http://localhost:3001/scrape', { link: result.link, query });
+        return axios.post(process.env.REACT_APP_API_URL + '/scrape', { link: result.link, query }, { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
       });
       const totalRequests = promises.length;
       let completedRequests = 0;
@@ -61,7 +61,7 @@ function Home() {
       if (scrapeQueue.length > 0) {
         const link = scrapeQueue[0];
         try {
-          const response = await axios.post('http://localhost:3001/scrape', { link });
+          const response = await axios.post(process.env.REACT_APP_API_URL + '/scrape', { link }, { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
           setScrapingData(prevData => ({ ...prevData, [searchResults.find(result => result.link === link).id]: response.data }));
         } catch (error) {
           console.error('Error scraping data:', error);
@@ -95,14 +95,14 @@ function Home() {
     try {
       setLoading(true);
 
-      const response = await axios.post('http://localhost:3001/search', {
+      const response = await axios.post(process.env.REACT_APP_API_URL + '/search', {
         q: query,
         limit,
         reverseSort,
         removeDuplicates,
       }, {
         headers: {
-          'authorization': 'Bearer AIzaSyD8Z0jJ9Q9Q6Z2MaSKLNSD2jkmsasdnk',
+          'authorization': process.env.REACT_APP_BEARER_TOKEN
         }
       });
       
@@ -134,7 +134,7 @@ function Home() {
   const handleAddIgnoreList = async (link) => {
     try {
       const domain = new URL(link).hostname;
-      await axios.put('http://localhost:3001/ignore', { 'domain': domain });
+      await axios.put(process.env.REACT_APP_API_URL + '/ignore', { 'domain': domain }, { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
         setSearchResults(searchResults.filter((result) => !result.link.includes(domain)));
     } catch (error) {
       console.error('Error adding link to ignore list:', error);

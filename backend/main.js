@@ -10,8 +10,7 @@ const app = express();
 
 const port = 3001;
 
-const Token = 'Bearer AIzaSyD8Z0jJ9Q9Q6Z2MaSKLNSD2jkmsasdnk';
-
+const Token = process.env.BEARER_TOKEN;
 
 app.use(cors(
   {

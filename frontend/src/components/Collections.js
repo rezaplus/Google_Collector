@@ -42,7 +42,11 @@ const CollectedData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/collected-data?page=1&limit=100000000000");
+      const response = await fetch(process.env.REACT_APP_API_URL + "/collected-data?page=1&limit=100000000000", {
+        headers: {
+          authorization: process.env.REACT_APP_BEARER_TOKEN,
+        },
+      });
       const jsonData = await response.json();
 
       // define column names

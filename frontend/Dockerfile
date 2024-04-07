@@ -22,4 +22,4 @@ RUN npm run build --silent
 EXPOSE 3000
 
 # Define the command to run the app
-CMD ["npm", "start"]
+CMD PORT=3002 npm start

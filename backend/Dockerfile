@@ -1,17 +1,24 @@
-FROM node:lts-alpine3.20
+# Use an official Node.js runtime as the base image
+FROM node:lts-alpine
+
 
 # Install Git
-RUN apk update && apk add --no-cache git 
+RUN apk update && apk add --no-cache git
 
-ADD . /backend
+# Set the working directory in the container
 WORKDIR /backend
 
-# COPY package.json /app
+# Copy package.json and package-lock.json to the working directory
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install --silent
+# Install project dependencies
+RUN npm install --omit=dev 
 
-# Install production dependencies
-# RUN npm run build --silent
+# Copy the entire project to the working directory
+COPY . .
 
+# Expose the port that the app will run on
 EXPOSE 3001
+
+# Define the command to run the app
+CMD ["node", "src/main.js"]

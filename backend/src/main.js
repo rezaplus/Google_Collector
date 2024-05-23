@@ -12,9 +12,14 @@ const port = 3001;
 
 const Token = process.env.BEARER_TOKEN;
 
+app.use(function(req, res, next) {
+  console.log(req.method, req.url);
+  next();
+});
+
 app.use(cors(
   {
-    origin: 'http://localhost:5050,http://3.9.0.94:5050',
+    origin: 'http://localhost:5050',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 200,
@@ -53,7 +58,9 @@ app.post('/search', async (req, res) => {
     const limit = req.body.limit || 10;
     const removeDuplicates = req.body.removeDuplicates || false;
     const reverseSort = req.body.reverseSort || false;
-    const selectedResults = await searchGoogle(query, limit, removeDuplicates, reverseSort);
+    const country = req.body.country || 'us';
+    const language = req.body.language || 'lang_en';
+    const selectedResults = await searchGoogle(query, limit, removeDuplicates, reverseSort, country, language);
     for (const result of selectedResults) {
       const domain = new URL(result.link).hostname;
       const collectedData = await selectCollectedData(0,0,{ 'domain': domain });

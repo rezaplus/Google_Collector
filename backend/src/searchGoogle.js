@@ -1,10 +1,10 @@
 const googleIt = require('google-it');
 const { selectSearchIgnore } = require('./database');
 
-async function searchGoogle(query, limit, removeDuplicates, reverseSort) {
+async function searchGoogle(query, limit, removeDuplicates, reverseSort, country = 'us', language = 'lang_en') {
     try {
 
-        const results = await googleIt({ 'query': query, 'limit': limit , 'no-display': true});
+        const results = await googleIt({ 'query': query, 'limit': limit , 'no-display': true, 'gl': country, 'hl': language});
 
         // if results is empty, return
         if (!results || results.length === 0) {

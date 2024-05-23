@@ -7,16 +7,16 @@
     "ejs": "^3.1.9",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
-    "google-it": "^1.6.4",
     "mongodb": "^6.5.0",
+    "google-it": "git+https://github.com/rezaplus/google-it.git",
     "mongoose": "^8.3.0",
     "puppeteer": "^22.6.2"
   },
   "name": "collect_data",
   "version": "1.0.0",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "nodemon --env-file .env main.js",
+    "start": "nodemon -L src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

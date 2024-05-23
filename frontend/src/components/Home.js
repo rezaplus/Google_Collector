@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaCheckCircle } from 'react-icons/fa';
+import countriesData from './../assets/countries.json'; // Make sure the path is correct
 
 
 function Home() {
@@ -15,6 +16,8 @@ function Home() {
   const [removeDuplicates, setRemoveDuplicates] = useState(localStorage.getItem('removeDuplicates') === 'true');
   const [scrapeQueue, setScrapeQueue] = useState([]);
   const [collectionProgress, setCollectionProgress] = useState(0);
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState(localStorage.getItem('country') || 'us');
 
 
   const handleCollectData = async (link, id) => {
@@ -77,6 +80,11 @@ function Home() {
     scrapeNextInQueue();
   }, [scrapeQueue, searchResults]);
 
+  useEffect(() => {
+    // Load countries data
+    setCountries(countriesData);
+  }, []);
+
   const CollectionProgressPopup = () => {
     return (
       <div className="position-fixed bottom-0 start-50 translate-middle-x mb-3">
@@ -100,6 +108,7 @@ function Home() {
         limit,
         reverseSort,
         removeDuplicates,
+        country
       }, {
         headers: {
           'authorization': process.env.REACT_APP_BEARER_TOKEN
@@ -123,6 +132,7 @@ function Home() {
       localStorage.setItem('searchLimit', limit.toString());
       localStorage.setItem('reverseSort', reverseSort.toString());
       localStorage.setItem('removeDuplicates', removeDuplicates.toString());
+      localStorage.setItem('country', country);
     } catch (error) {
       console.error('Error fetching search results:', error);
       setError('Error fetching search results. Please try again later.');
@@ -146,6 +156,7 @@ function Home() {
     setLimit(parseInt(localStorage.getItem('searchLimit')) || 100);
     setReverseSort(localStorage.getItem('reverseSort') === 'true');
     setRemoveDuplicates(localStorage.getItem('removeDuplicates') === 'true');
+    setCountry(localStorage.getItem('country') || 'us');
   }, []);
 
   return (
@@ -185,6 +196,13 @@ function Home() {
           onChange={(e) => setLimit(parseInt(e.target.value))}
           className="form-control" style={{ maxWidth: '100px' }}
         />
+        <select className="form-select" style={{ maxWidth: '100px' }} onChange={(e) => setCountry(e.target.value)}>
+              {countries.map(item => (
+            <option key={item.code} value={item.code} selected={item.code === country}>
+              {item.name}
+            </option>
+          ))}
+        </select>
         <button onClick={handleSearch} className="btn btn-primary">Search</button>
         <button onClick={handleCollectAll} className="btn btn-success">Collect All</button>
       </div>

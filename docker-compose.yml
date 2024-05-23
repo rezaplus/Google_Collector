@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   backend:
     build: 
@@ -9,6 +7,12 @@ services:
     restart: always
     ports:
       - "3001:3001"
+    command: npm run start
+    volumes:
+      - ./backend/src:/backend/src
+      - ./backend/node_modules:/data/backend/node_modules
+    env_file:
+      - /backend/.env
     
   frontend:
     build: 
@@ -18,13 +22,19 @@ services:
     restart: always
     ports:
       - "5050:3002"
+    volumes:
+      - ./frontend:/app/frontend
 
 
-  mongo:
+  mongodb:
     image: mongo:latest
-    container_name: mongo
+    container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
     volumes:
-      - ./data:/data/db
+      - mongodb:/data/db
+    command: mongod --quiet --logpath /dev/null
+
+volumes:
+  mongodb:

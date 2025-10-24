@@ -2,7 +2,7 @@ const express = require('express');
 const searchGoogle = require('./searchGoogle');
 const { addCollectedData, selectCollectedData , addSearchIgnore, selectSearchIgnore, deleteSearchIgnore } = require('./database');
 const { scrapeWebsiteInfo } = require('./scraper');
-// const cors = require('cors');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 
@@ -17,14 +17,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-// app.use(cors(
-//   {
-//     origin: 'http://localhost:5050',
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     preflightContinue: false,
-//     optionsSuccessStatus: 200,
-//   }
-// ));
+app.use(cors(
+  {
+    origin: 'http://localhost:5050',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+  }
+));
 
 app.use((req, res, next) => {
   // validate Bearer token

@@ -2,7 +2,7 @@ const express = require('express');
 const searchGoogle = require('./searchGoogle');
 const { addCollectedData, selectCollectedData , addSearchIgnore, selectSearchIgnore, deleteSearchIgnore } = require('./database');
 const { scrapeWebsiteInfo } = require('./scraper');
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser');
 
 

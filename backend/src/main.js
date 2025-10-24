@@ -17,14 +17,14 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(cors(
-  {
-    origin: 'http://localhost:5050',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 200,
-  }
-));
+// app.use(cors(
+//   {
+//     origin: 'http://localhost:5050',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     preflightContinue: false,
+//     optionsSuccessStatus: 200,
+//   }
+// ));
 
 app.use((req, res, next) => {
   // validate Bearer token

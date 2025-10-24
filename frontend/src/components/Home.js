@@ -196,9 +196,9 @@ function Home() {
           onChange={(e) => setLimit(parseInt(e.target.value))}
           className="form-control" style={{ maxWidth: '100px' }}
         />
-        <select className="form-select" style={{ maxWidth: '100px' }} onChange={(e) => setCountry(e.target.value)}>
+        <select className="form-select" style={{ maxWidth: '100px' }} value={country} onChange={(e) => setCountry(e.target.value)}>
               {countries.map(item => (
-            <option key={item.code} value={item.code} selected={item.code === country}>
+            <option key={item.code} value={item.code}>
               {item.name}
             </option>
           ))}

@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
 
 app.use(cors(
   {
-    origin: 'http://localhost:5050',
+    origin: 'http://localhost:3002',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 200,
@@ -61,6 +61,7 @@ app.post('/search', async (req, res) => {
     const country = req.body.country || 'us';
     const language = req.body.language || 'lang_en';
     const selectedResults = await searchGoogle(query, limit, removeDuplicates, reverseSort, country, language);
+    console.log(`Fetched ${selectedResults.length} results from Google for query: ${query}`);
     for (const result of selectedResults) {
       const domain = new URL(result.link).hostname;
       const collectedData = await selectCollectedData(0,0,{ 'domain': domain });

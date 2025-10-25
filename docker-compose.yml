@@ -12,7 +12,13 @@ services:
       - ./backend/node_modules:/data/backend/node_modules
     env_file:
       - ./backend/.env
+    environment:
+      - CORS_ORIGIN=*
     command: ["node", "src/main.js"]
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
     
   frontend:
     build: 
@@ -24,6 +30,14 @@ services:
       - "3002:3002"
     volumes:
       - ./frontend:/app/frontend
+    environment:
+      - REACT_APP_BACKEND_PORT=3001
+      - REACT_APP_BEARER_TOKEN=Bearer AIzaSyD8Z0jJ9Q9Q6Z2MaSKLNSD2jkmsasdnk
+      - REACT_APP_USERNAME=admin
+      - REACT_APP_PASSWORD=Hello123!
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - app-network
 
   mongodb:
     image: mongo:latest
@@ -34,6 +48,12 @@ services:
     volumes:
       - mongodb:/data/db
     command: mongod --quiet --logpath /dev/null
+    networks:
+      - app-network
 
 volumes:
   mongodb:
+
+networks:
+  app-network:
+    driver: bridge

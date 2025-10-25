@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { USERNAME, PASSWORD } from '../config';
 
 const LoginPage = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState('');
@@ -10,7 +11,7 @@ const LoginPage = ({ setIsLoggedIn }) => {
   const handleLogin = (event) => {
     event.preventDefault();
     // Validate username and password here
-    if (username === process.env.REACT_APP_USERNAME && password === process.env.REACT_APP_PASSWORD) {
+    if (username === USERNAME && password === PASSWORD) {
       setIsLoggedIn(true);
       localStorage.setItem('isLoggedIn', true);
       // Redirect to home page using navigate function

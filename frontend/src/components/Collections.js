@@ -3,6 +3,7 @@ import "./../assets/css/CollectedData.css";
 import * as XLSX from "xlsx"; // Import XLSX library for Excel export
 import { saveAs } from "file-saver"; // Import file-saver for saving files
 import { Dropdown, DropdownButton } from "react-bootstrap"; // Import Bootstrap components
+import { API_URL, BEARER_TOKEN } from '../config';
 
 const CollectedData = () => {
   const [data, setData] = useState([]);
@@ -42,9 +43,9 @@ const CollectedData = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + "/collected-data?page=1&limit=100000000000", {
+      const response = await fetch(API_URL + "/collected-data?page=1&limit=100000000000", {
         headers: {
-          authorization: process.env.REACT_APP_BEARER_TOKEN,
+          authorization: BEARER_TOKEN,
         },
       });
       const jsonData = await response.json();

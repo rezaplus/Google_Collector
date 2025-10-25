@@ -17,12 +17,16 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Dynamic CORS configuration - accepts requests from any origin
+// Can be restricted by setting CORS_ORIGIN environment variable
+const corsOrigin = process.env.CORS_ORIGIN || '*';
 app.use(cors(
   {
-    origin: 'http://localhost:3002',
+    origin: corsOrigin,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 200,
+    credentials: true,
   }
 ));
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL, BEARER_TOKEN } from '../config';
 
 const SearchIgnoreList = () => {
   const [ignoreList, setIgnoreList] = useState([]);
@@ -8,7 +9,7 @@ const SearchIgnoreList = () => {
   useEffect(() => {
     const fetchIgnoreList = async () => {
       try {
-        const response = await axios.get( process.env.REACT_APP_API_URL + '/ignore', { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
+        const response = await axios.get(API_URL + '/ignore', { headers: { 'authorization': BEARER_TOKEN } });
         setIgnoreList(response.data);
       } catch (error) {
         console.error('Error fetching ignore list:', error);
@@ -20,7 +21,7 @@ const SearchIgnoreList = () => {
 
   const handleAddItem = async () => {
     try {
-      await axios.put( process.env.REACT_APP_API_URL + '/ignore', { domain: newItem }, { headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
+      await axios.put(API_URL + '/ignore', { domain: newItem }, { headers: { 'authorization': BEARER_TOKEN } });
       setIgnoreList([...ignoreList, { domain: newItem }]);
       setNewItem('');
     } catch (error) {
@@ -30,7 +31,7 @@ const SearchIgnoreList = () => {
 
   const handleDeleteItem = async (item) => {
     try {
-      await axios.delete( process.env.REACT_APP_API_URL + '/ignore', { data: { domain: item.domain }, headers: { 'authorization': process.env.REACT_APP_BEARER_TOKEN } });
+      await axios.delete(API_URL + '/ignore', { data: { domain: item.domain }, headers: { 'authorization': BEARER_TOKEN } });
       setIgnoreList(ignoreList.filter((i) => i.domain !== item.domain));
     } catch (error) {
       console.error('Error deleting item:', error);
